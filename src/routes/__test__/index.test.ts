@@ -1,18 +1,19 @@
 import request from 'supertest';
 
 import { app } from '../../app';
-import { Ticket } from "../../models/ticket"
+import { Ticket } from '../../models/ticket';
 
 // buildTicket helper
 const buildTicket = async () => {
   const ticket = Ticket.build({
     title: 'concert',
-    price: 20
+    price: 20,
+    id: global.createId(),
   });
   await ticket.save();
 
   return ticket;
-}
+};
 
 it('fetches orders for an particular user', async () => {
   // create three tickets
@@ -53,4 +54,4 @@ it('fetches orders for an particular user', async () => {
   expect(response.body[1].id).toEqual(orderTwo.id);
   expect(response.body[0].ticket.id).toEqual(ticketTwo.id);
   expect(response.body[1].ticket.id).toEqual(ticketThree.id);
-})
+});
